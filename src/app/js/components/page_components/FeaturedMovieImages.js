@@ -56,13 +56,17 @@ class FeaturedMovieImages extends React.Component {
 		var tmdb = new TMDB();
 		return (
 			<div>
-			{ this.state.showModalImage && <div id="featured-image-popup-modal" onClick={ () => this.showImage() }><div><span><img src={this.state.modalImageUrl} /></span></div></div> }
+			{ this.state.showModalImage && 
+				<div id="featured-image-popup-modal" onClick={ () => this.showImage() }>
+					<div><span><img src={this.state.modalImageUrl} /></span></div>
+				</div> 
+			}
 			<h2>Images</h2><br />
 			<div className="featuredImages">{
 				movieInfo[featuredId].images.images.backdrops.map((image, i) => {
-					return (<span key={ i }>
-						<img onClick={ () => { this.showImage(tmdb.getFullImageUrl(image.file_path, "w780")) } } src={ tmdb.getFullImageUrl(image.file_path, "w300") } />
-					</span>);
+					return (<span key={ i }><img 
+						onClick={ () => { this.showImage(tmdb.getFullImageUrl(image.file_path, "w780")) } }
+						src={ tmdb.getFullImageUrl(image.file_path, "w300") } /></span>);
 				})
 			}</div>
 			</div>

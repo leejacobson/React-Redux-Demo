@@ -9,6 +9,11 @@ import { getMoviesInit, getMovies } from "./actions/movieActions";
 import "../css/style.less";
 
 class Layout extends React.Component {
+	constructor() {
+		super();
+		this.loadingBgImgs = [];
+	}
+	
 	componentWillMount() {
 		if (this.props.movies.currentTitles.movies.length == 0) {
 			this.props.dispatch((dispatch) => {
@@ -22,7 +27,7 @@ class Layout extends React.Component {
 	}
 
 	render() {
-		var bgImg = {};
+		var bgImgStyle = {};
 		var { movies } = this.props;
 		if (movies.featuredId != null || movies.currentTitles.complete) {
 			var movieBg;
@@ -31,25 +36,41 @@ class Layout extends React.Component {
 			} else {
 				movieBg = movies.movieInfo[movies.featuredId].info.backdrop_path;
 			}
+
 			var tmdbApi = new TMDB();
-			bgImg = {
-				backgroundImage: 'url("' + tmdbApi.getFullImageUrl(movieBg) + '")',
+			var bgImgSrc = tmdbApi.getFullImageUrl(movieBg);
+			bgImgStyle = {
+				backgroundImage: 'url("' + bgImgSrc + '")',
 				backgroundSize: 'cover',
 				backgroundPosition: 'center center',
+				opacity: '0',
 			};
+			this.prettyBGLoad(bgImgSrc, 'bg-img');
 		}
-		
+
 		return (
 			<div id="content-wrap">
 			<div id="top-content-bg">
-				<div className="bg-img" style={bgImg}></div>
+				<div id="bg-img" style={bgImgStyle}></div>
 				<div className="bottom"></div>
 			</div>
 			<Header/>
 			{this.props.children}
 			</div>
 		);
-	};
+	}
+	
+	prettyBGLoad(imgUrl, ele) {
+		if (!this.loadingBgImgs.find((i) => i == imgUrl)) {		
+			var nwImg = new Image();
+			nwImg.src = imgUrl;
+			nwImg.onload = () => {
+				document.getElementById(ele).style.opacity = '0.5';
+				this.loadingBgImgs.pop(imgUrl);
+			}
+			this.loadingBgImgs.push(imgUrl);
+		}
+	}
 };
 
 export default connect((store) => {

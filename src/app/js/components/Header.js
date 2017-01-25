@@ -1,18 +1,18 @@
 import React from "react";
 import { Link } from "react-router";
 
-import pjson from '../../../../package.json'
-
 export default class Header extends React.Component {
 	links() {
+		const baseUrl = process.env.BASE_URL;
+
 		return (
 			<div>
-				<Link to={ pjson.baseUrl + '/' }>Home</Link>
-				<Link to={ pjson.baseUrl + '/about' }>About</Link>
+				<Link to={ baseUrl + '/' }>Home</Link>
+				<Link to={ baseUrl + '/about' }>About</Link>
 			</div>
 		);
 	}
-	
+
 	render() {
 		return 	(
 			<div>

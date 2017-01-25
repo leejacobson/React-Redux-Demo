@@ -57,11 +57,13 @@ table{
     background: -moz-linear-gradient(rgba(17,17,17,0), rgba(17,17,17,1));
     background: linear-gradient(rgba(17,17,17,0), rgba(17,17,17,1));
 }
-#top-content-bg > .bg-img{
+#top-content-bg > #bg-img{
 	position:relative;
 	height:100%;
     width: 100%;
 	opacity:0.5;
+	
+	transition: background-image 0.5s, opacity 0.5s;
 
 	animation: animateBg 60s ease infinite;
 	@keyframes animateBg{
@@ -214,10 +216,10 @@ table{
 	display:inline-block;
 }
 .featuredImages img{
-	width:150px;
+	width:160px;
 	cursor:pointer;
 	transition:opacity 1s;
-	box-shadow:0 0 3px rgba(0,0,0,0.4);
+	box-shadow:0 0 3px rgba(0,0,0,0.45);
 }
 .featuredImages img:hover{
 	opacity:0.9;

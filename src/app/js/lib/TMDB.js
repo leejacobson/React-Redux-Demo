@@ -3,7 +3,8 @@ import axios from "axios";
 export default class TMDB {	
 	constructor() {
 		// https://www.themoviedb.org/documentation/api
-		this.API_KEY = "[API_KEY]";
+		const baseUrl = process.env.TMDB_API_KEY;
+		this.API_KEY = baseUrl;
 
 		this.imageUrl = "http://image.tmdb.org/t/p/";
 		this.backdrop_sizes = ["w300","w780","w1280","original"];

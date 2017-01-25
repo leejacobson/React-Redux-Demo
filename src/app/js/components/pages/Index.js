@@ -6,10 +6,10 @@ import FeaturedMovie from "../page_components/FeaturedMovie";
 
 import TMDB from "../../lib/TMDB";
 
-import pjson from '../../../../../package.json';
-
 class Index extends React.Component {
 	render() {
+		const baseUrl = process.env.BASE_URL;
+		
 		var tmdbApi = new TMDB();
 		return (
 			<div>
@@ -23,8 +23,8 @@ class Index extends React.Component {
 							backgroundPosition: 'center center',
 						};
 						return <Link key={movie.id} className="movie-box-link" to={
-							pjson.baseUrl + "/movie/" + movie.title.toLowerCase().replace(/[^a-z\s]/g, '').replace(/[\s]/g, "-") + "/"+movie.id
-						}><span style={bgImg} className="bg"></span><span className="darken"><span>{movie.title}</span></span></Link>;
+							baseUrl + "/movie/" + movie.title.toLowerCase().replace(/[^a-z\s]/g, '').replace(/[\s]/g, "-") + "/"+movie.id
+						}><span style={bgImg} className="bg"></span><span className="darken"><span>{movie.title.trim()}</span></span></Link>;
 					})}
 					</div>
 				</div>
