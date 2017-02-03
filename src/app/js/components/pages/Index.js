@@ -14,7 +14,8 @@ class Index extends React.Component {
 		return (
 			<div>
 				<FeaturedMovie featuredMovie={ this.props.params.movieId } />
-				<div className="pad"><h2>Other Showing Movies</h2><br />
+				<div className="pad">
+					<h2>Other Showing Movies</h2><br />
 					<div className="center">
 					{this.props.movies.currentTitles.movies.map(function(movie) {
 						var bgImg = {

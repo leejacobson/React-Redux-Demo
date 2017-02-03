@@ -21,7 +21,7 @@ var moviesReducer = (state=defaultState, action) => {
 				}
 			};
 		}
-		case "GET_MOVIES": {			
+		case "GET_MOVIES": {
 			return {
 				...state,
 				currentTitles: {
@@ -37,6 +37,11 @@ var moviesReducer = (state=defaultState, action) => {
 				loading: true,
 				complete: false,
 				info: {},
+				credits: {
+					loading: false,
+					complete: false,
+					credits: {},
+				}
 			}
 			return {
 				...state,
@@ -46,6 +51,7 @@ var moviesReducer = (state=defaultState, action) => {
 		case "GET_FEATURED_INFO": {
 			var newMovieInfo = {...state.movieInfo};
 			newMovieInfo[action.payload.movieId] = {
+				...newMovieInfo[action.payload.movieId],
 				loading: false,
 				complete: true,
 				info: action.payload.info,
@@ -79,11 +85,34 @@ var moviesReducer = (state=defaultState, action) => {
 				loading: false,
 				complete: true,
 				images: action.payload.images,
-			}
+			};
 			return {
 				...state,
 				movieInfo: newMovieInfo,
 			};
+		}
+		case "GET_CREDITS_INIT": {
+			let newMovieInfo = {...state.movieInfo};
+			newMovieInfo[action.payload.movieId].credits = {
+				loading: true,
+				complete: false,
+			};
+			return {
+				...state,
+				movieInfo: newMovieInfo,
+			};
+		}
+		case "GET_CREDITS": {
+			let newMovieInfo = {...state.movieInfo};
+			newMovieInfo[action.payload.movieId].credits = {
+				loading: false,
+				complete: true,
+				creditsList: action.payload.credits,
+			};
+			return {
+				...state,
+				movieInfo: newMovieInfo,
+			}
 		}
 	}
 	return state;

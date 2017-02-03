@@ -25,6 +25,10 @@ export default class TMDB {
 	getMovieImages(movieId) {
 		return this.get('movie/' + movieId + '/images');
 	}
+	
+	getMovieCredits(movieId) {
+		return this.get('movie/' + movieId + '/credits');
+	}
 
 	get(resource, params) {
 		var tmdbRequest = new TMDBRequest(this.API_KEY);

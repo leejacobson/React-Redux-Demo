@@ -48,3 +48,22 @@ export function getMovieImages(movieId, images) {
 		},
 	};
 }
+
+export function getMovieCreditsInit(movieId) {
+	return {
+		type: "GET_CREDITS_INIT",
+		payload: {
+			movieId: movieId,
+		},
+	};
+}
+
+export function getMovieCredits(movieId, credits) {
+	return {
+		type: "GET_CREDITS",
+		payload: {
+			movieId: movieId,
+			credits: credits
+		},
+	};
+}

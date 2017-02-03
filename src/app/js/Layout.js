@@ -8,7 +8,7 @@ import { getMoviesInit, getMovies } from "./actions/movieActions";
 
 import "../css/style.less";
 
-class Layout extends React.Component {
+export class Layout extends React.Component {
 	constructor() {
 		super();
 		this.loadingBgImgs = [];
@@ -20,6 +20,8 @@ class Layout extends React.Component {
 				dispatch(getMoviesInit());
 				var tmdbApi = new TMDB();
 				tmdbApi.getCurrentReleases().success((result) => {
+					
+					
 					dispatch(getMovies(result.data.results));
 				});
 			});
@@ -64,12 +66,18 @@ class Layout extends React.Component {
 		if (!this.loadingBgImgs.find((i) => i == imgUrl)) {		
 			var nwImg = new Image();
 			nwImg.src = imgUrl;
-			nwImg.onload = () => {
-				document.getElementById(ele).style.opacity = '0.5';
-				this.loadingBgImgs.pop(imgUrl);
+			if (nwImg.complete) {
+				this.imgOnLoad(ele, imgUrl)
+			} else {
+				this.loadingBgImgs.push(imgUrl);
+				nwImg.onload = () => { this.imgOnLoad(ele, imgUrl) };
 			}
-			this.loadingBgImgs.push(imgUrl);
 		}
+	}
+
+	imgOnLoad(ele, imgUrl) {
+		document.getElementById(ele).style.opacity = '0.5';
+		this.loadingBgImgs.pop(imgUrl);
 	}
 };
 

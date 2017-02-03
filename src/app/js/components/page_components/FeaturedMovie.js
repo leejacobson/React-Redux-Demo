@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import FeaturedMovieImages from "./FeaturedMovieImages";
+import FeaturedMovieCredits from "./FeaturedMovieCredits";
 import { getFeaturedInit, getFeaturedInfo, setFeatured } from "../../actions/movieActions";
 import TMDB from "../../lib/TMDB";
 
@@ -14,9 +15,9 @@ class FeaturedMovie extends React.Component {
 	}
 
 	getFeaturedTitle() {
-		var featuredTitle;
+		let featuredTitle;
 
-		var { currentTitles } = this.props.movies;
+		const { currentTitles } = this.props.movies;
 		if (currentTitles.movies.length == 0) {
 			return null;
 		}
@@ -31,13 +32,13 @@ class FeaturedMovie extends React.Component {
 			featuredTitle = currentTitles.movies[0];
 		}
 
-		var movieInfo = this.props.movies.movieInfo;
+		const { movieInfo } = this.props.movies;
 		if (movieInfo[featuredTitle.id] == undefined 
 			|| (!movieInfo[featuredTitle.id].loading && !movieInfo[featuredTitle.id].complete)
 		) {
 			this.props.dispatch((dispatch) => {
 				dispatch(getFeaturedInit(featuredTitle.id));
-				var tmdb = new TMDB();
+				const tmdb = new TMDB();
 				tmdb.getMovieInfo(featuredTitle.id).success((success) => {
 					dispatch(getFeaturedInfo(featuredTitle.id, success.data));
 				});
@@ -54,12 +55,11 @@ class FeaturedMovie extends React.Component {
 		if (this.props.movies.featuredId == undefined) {
 			return null;
 		}
-		
-		var { featuredId } = this.props.movies;
-		
-		var movieInfo = this.props.movies.movieInfo;
+
+		const { featuredId, movieInfo } = this.props.movies;
+
 		if (movieInfo[featuredId] !== undefined && movieInfo[featuredId].complete) {
-			var featuredMovieInfo = movieInfo[featuredId].info;
+			const featuredMovieInfo = movieInfo[featuredId].info;
 			return (
 				<div id="movie-info-wrap" className="pad">
 					<h1>{ featuredMovieInfo.title }</h1><br />
@@ -84,6 +84,7 @@ class FeaturedMovie extends React.Component {
 							}</tbody></table><br />
 					</div>
 					<div className="clear"></div>
+					<FeaturedMovieCredits/>
 					<FeaturedMovieImages/>
 				</div>
 			);
